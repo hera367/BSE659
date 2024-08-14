@@ -19,10 +19,19 @@ If you need to use a package, you need to first download it using `install.packa
 # Importing covid testing data 
 covid_testdata <- read.csv('StatewiseTestingDetails.csv')
 ```
+Advantages of tidyverse: convert your data into tibble
+
+```{r}
+covid_testdata
+```
+
 
 ```{r}
 # Using head function to view first few rows of the data
 head(covid_testdata)
+# glimpse()
+# View()
+length(covid_testdata)
 ```
 
 ```{r}
@@ -66,7 +75,7 @@ covid_data
 Now we will look at another tidyverse package, [**dplyr**](https://dplyr.tidyverse.org): it is used for editing tibbles.
 
 ```{r}
-# library(dplyr)
+library(dplyr)
 ```
 
 We will look at `filter` and `select` functions from the dplyr package:
@@ -91,6 +100,7 @@ filter(covid_data, State == 'Uttarakhand' & Positive > 5000)
 
 ```{r}
 select(covid_data, State, TotalSamples)
+# OR
 select(covid_data, c(State, TotalSamples))
 ```
 
@@ -100,7 +110,7 @@ If we want to view all columns other than the column `Negative`, we can use '-' 
 select(covid_data, -Negative)
 ```
 
-Or you can select a few contiguous coloumns using `:` operator:
+Or you can select a few contiguous columns using `:` operator:
 
 ```{r}
 select(covid_data, State:Positive)
@@ -120,7 +130,9 @@ covid_data
 Let's say if we want the proportion of positive cases, we can use `mutate` as shown below:
 
 ```{r}
-newdata <- mutate(covid_data, prop = Positive/TotalSamples)
+# newdata <- mutate(covid_data, positive = positive + 100)
+
+newdata <- mutate(covid_data, prop = Positive/TotalSamples) # adding a new column to the table
 newdata
 ```
 
@@ -149,13 +161,13 @@ Now you may want to save this modified file for future use. Make sure you have s
 To save this file, you can simply use the write command:
 
 ```{r}
-write.csv(covid_data, file= "covid_data_copy.csv")
+write.csv(covid_data, file= "covid_data_copy_hera.csv")
 ```
 
 You may then later want to read the file into your workspace. For this you can use the read command.
 
 ```{r}
-covid_data <- read.csv(file= "covid_data_copy.csv")
+covid_data <- read.csv(file= "covid_data_copy_hera.csv")
 ```
 
 To find your current working directory and see the files in the directory:
