@@ -1,5 +1,5 @@
 ---
-title: "R Notebook"
+title: "R Notebook - Hera"
 output: html_notebook
 ---
 
@@ -14,7 +14,7 @@ Basic commands on R
 Assigning variable 
 ```{r}
 x<- 2*8
-x
+x # changed rmd file
 ```
 Numeric Vector and operation on it
 ```{r}
