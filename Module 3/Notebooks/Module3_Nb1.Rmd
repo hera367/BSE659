@@ -4,7 +4,7 @@ output: html_notebook
 ---
 ```{r}
 #Initial packages
-install.packages("lsr")
+# install.packages("lsr")
 ```
 
 In this notebook, we'll take a look at how to explore a dataset.
@@ -32,12 +32,14 @@ That's a lot of theory, let's dive into some data now.
 
 **Loading the Australian Football League Dataset**
 
+check this chunk --> non functional
 ```{r}
 #Change the path according to your PC
-path = "/Users/lenovo1/Desktop/mtech/courses/stats/Datasets/data/"
-fileN ="aflsmall.Rdata"
-file_path = paste(path,fileN, sep = "")
-load(file_path)
+path = "C:/Users/fatma/OneDrive/Desktop/IITK BOOKS/BIOSTATISTICS(3rd SEM)/GITHUB/BSE659/Module 3//Notebooks/aflsmall.Rdata"
+
+# fileN ="aflsmall.Rdata"
+# file_path = paste(path,fileN, sep = "")
+# load(aflsmall.Rdata)
 library(lsr)
 who()
 ```
@@ -75,6 +77,7 @@ Try finding the skewness for the above data for afl.margins using skew() functio
 ```{r}
 library(psych)
 #Try finding skewness of afl.margins here
+skew(afl.margins)
 ```
 
 Although such a graphical representation gives a 'gist' of the data but it is useful to find some "summary" statistics as well.
@@ -89,10 +92,10 @@ As you've already seen in previous classes, the mean of a set of observations is
 Try finding the mean for the first 5 values from afl.margins and then for all the values of afl.margins
 ```{r}
 #Don't forget to uncomment the following before running
-#afl.mean5 = 
-#afl.mean = 
-#afl.mean5
-#afl.mean
+afl.mean5 = sum(afl.margins[1:5])/5
+afl.mean =  sum(afl.margins)/length(afl.margins)
+afl.mean5
+afl.mean
 ```
 
 **Median**
@@ -105,8 +108,11 @@ Probably you mentally arranged these numbers in ascending order first and then f
 Now try finding out the median for afl.margins.
 
 ```{r}
-#afl.median = 
-#afl.median
+
+???????????
+
+afl.median = (order(afl.margins))
+afl.median
 ```
 
 **Difference between Mean and Median**
@@ -143,7 +149,15 @@ Let's try trimming the mean for above data.
 
 ```{r}
 dataset <- c(-15,2,3,4,5,6,7,8,9,12)
+# mean(x = dataset, trim = .1)
+# mean(x = dataset, trim = .05)
+mean(dataset)
+median(dataset)
 mean(x = dataset, trim = .1)
+mean(x = dataset, trim = .05)
+
+
+
 #Try calculating 5% trimmed mean for above dataset
 ```
 
@@ -154,8 +168,8 @@ So far we've seen how to find the mean and median but what about mode. The **mod
 Try to find out the mode for the variable afl.finalists
 
 ```{r}
-#afl.mode = 
-#afl.mode
+afl.mode = modeOf(afl.margins)
+afl.mode
 ```
 
 So far we've just seen the central measures of tendency, but we saw in the beginning that individual variability is quite important in biology. So, let's take a look at some of the measures of variability.
@@ -170,6 +184,7 @@ The range of a variable is very simple: it’s the biggest value minus the small
 
 ```{r}
 #Find range of afl.margins here
+range(afl.margins)
 ```
 
 But what about the earlier data we saw, ` -100,2,3,4,5,6,7,8,9,10`. Without removing the outlier, we'll get a range of 110 but without the outlier, we'll get a range of only 8.
@@ -180,11 +195,15 @@ That is why there is something called the interquartile range (IQR) which is lik
 Try finding out 25%, 75% and 50% quantiles for afl.margins and also the Inter-quartile range.
 ```{r}
 #Use the functions quantile(x = afl.margins, prob = 0.2) for 20% quantile and IQR() 
+IOR = quantile(x = afl.margins, prob = 0.2)
+IQR
 ```
 
 IQR can simply be thought as the range spanned by the “middle half” of the data.
 
 **Variance**
+
+mean squared deviation
 
 In order to find out the variance of data from the mean or median, we need to find the deviation such that abs (X~i~ - $\overline{X}$). ($\overline{X}$ is the mean of dataset). Mathematically, squared deviations are preferred over absolute deviations, and if we take the mean of all the squared deviations, we'll get the **variance** of the data. 
 
@@ -192,6 +211,7 @@ Try finding out the variance using `var()`.
 
 ```{r}
 #Use var() for finding variance of afl.margins
+var(afl.margins)
 ```
 
 _Read more about var() function and absolute vs squared deviations in Section 5.2.4 from Learning Statistics with R by D. Navarro_
@@ -203,7 +223,8 @@ But what does this variance signify? It is very difficult to interpret the squar
 Try to find out the standard deviation of afl.margins.
 
 ```{r}
-#Find out Std dev. here
+sd = sqrt(var(afl.margins))
+sd
 ```
 
 ##### Quick cheat sheet: When to use what?
@@ -231,6 +252,7 @@ There's indeed a function called `summary()` in R.
 
 ```{r}
 #Check out what summary() does for afl.margins
+summary(afl.margins)
 ```
 
 Pretty cool, no?
