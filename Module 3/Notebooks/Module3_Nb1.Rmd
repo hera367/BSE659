@@ -111,8 +111,8 @@ Now try finding out the median for afl.margins.
 
 ???????????
 
-afl.median = (order(afl.margins))
-afl.median
+#afl.median = (order(afl.margins))
+#afl.median
 ```
 
 **Difference between Mean and Median**
@@ -207,6 +207,9 @@ mean squared deviation
 
 In order to find out the variance of data from the mean or median, we need to find the deviation such that abs (X~i~ - $\overline{X}$). ($\overline{X}$ is the mean of dataset). Mathematically, squared deviations are preferred over absolute deviations, and if we take the mean of all the squared deviations, we'll get the **variance** of the data. 
 
+--> squaring them leaves out negative values.
+    even spreading of data.
+
 Try finding out the variance using `var()`.
 
 ```{r}
@@ -221,6 +224,9 @@ _Read more about var() function and absolute vs squared deviations in Section 5.
 But what does this variance signify? It is very difficult to interpret the squared value and therefore, we take the _root mean square deviation_ for interpreting the spread of data points. This is called _Standard Deviation_ and is calculated by taking the square root of variance mathematically, and using the sd() function in R base package.
 
 Try to find out the standard deviation of afl.margins.
+
+sd and var need N-1...> find out why?...
+smaller the sample more diviations can be seen.
 
 ```{r}
 sd = sqrt(var(afl.margins))
@@ -245,6 +251,12 @@ sd
   - Square root of the variance
   - Fairly elegant mathematically, and can be interpreted pretty well
   - Complements mean and is the most popular measure of variation
+  
+- IQR
+  - center of 50% of data (is in this range).
+- Quartile
+  - Quaters.
+  -Break 20-20-20
 
 Now that we've learnt about the different methods of describing a data, it would've been awesome if R could summarize all of this for us together, right? 
 
@@ -253,6 +265,25 @@ There's indeed a function called `summary()` in R.
 ```{r}
 #Check out what summary() does for afl.margins
 summary(afl.margins)
+
+## gives
+#range --> min and max
+#quartiles --? 1st and 3rd ---> 1st this is where the 25th point comes
+#central tendencies --> mean and median
+```
+To check kurtos and skewness
+
+- describe() and skew() works with psyc package.
+
+vars --> no of variable
+n --> no of observations
+trimmed --> mean trim (above formmu;a 0.1)
+
+```{r}
+describe(afl.margins)
+```
+```{r}
+summary(object == x)
 ```
 
 Pretty cool, no?
@@ -272,6 +303,19 @@ In fact, you can also describe these statistics group wise.
 
 For instance, run `describeBy( x=clin.trial, group=clin.trial$therapy )`
 
+effect of  combination of drugs and therapies on mood gain. u want to check which combinations gives the highest mood gain.
+
+```{r}
+head(clin.trial)
+```
+```{r}
+summary(clin.trial) ## not that useful. if their are groups in ur dataand u need to do some analysis its harder to do through summary.
+```
+```{r}
+describe(clin.trial)
+```
+
+
 ```{r}
 describeBy( x=clin.trial, group=clin.trial$therapy )
 ```
@@ -282,21 +326,36 @@ Another more general command for grouping is `by()`
 Try running the following chunk and compare the results with the `describeBy()` command above.
 
 ```{r}
-by(data=clin.trial, INDICES=clin.trial$therapy, FUN=describe)
+by(data=clin.trial, INDICES=clin.trial$therapy, FUN=describe) #FUN --> function
+#Also try replacing describe in FUN above with summary
+```
+
+```{r}
+by(data=clin.trial, INDICES=clin.trial$therapy, FUN=summary) #FUN --> function
 #Also try replacing describe in FUN above with summary
 ```
 
 What if you have multiple grouping variables? Suppose, for example, you would like to look at the average mood gain separately for all possible combinations of drug and therapy.We can use `aggregate()` command.
 
+
 ```{r}
-aggregate( formula = mood.gain ~ drug + therapy, 
+aggregate(mood.gain ~ drug + therapy, 
            data = clin.trial,
-           FUN = mean) 
+           FUN = mean) ## ~ mood gain is based on drug and therapy
+
+
 #1 mood.gain by drug/therapy combination
 #2 data is in the clin.trial data frame
 #3 print out group means
 
 #Try interchanging the positions of drug and therapy above
 ```
+Inference:
+
+best --> 3rd, then 6th.
+
+
+
+
 
 That's all for today!
