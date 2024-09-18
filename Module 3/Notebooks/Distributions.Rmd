@@ -83,6 +83,8 @@ Probability distribution is simply the probabilities of these different events a
 
 ```{r}
 #Try plotting a bar graph of all the probabilities above
+
+
 ```
 Let's think about what happens in case of non-elementary events. E.g. An event E where either “blue jeans” or “black jeans” or “grey jeans" has occurred. 
 Then what will be the probability of event E.
@@ -94,7 +96,7 @@ If any of these elementary events occurs, then E is also said to have occurred. 
 ![Probability_rules](Fig5.png)
 
 ##### Binomial Distribution
-
+                                                                    
 *Refer to section 9.4.1, Navarro D., for the detailed example*
 
 Some basic terminology - We’ll let `N` denote the number of dice rolls in our experiment; which is often referred to as the `size parameter` of our binomial distribution. We’ll also use `θ` to refer to the the probability that a single die comes up skulls, a quantity that is usually called the `success probability` of the binomial. Finally, we’ll use `X` to refer to the results of our experiment, namely the number of skulls I get when I roll the dice. Since the actual value of X is due to chance, we refer to it as a `random variable`.
@@ -103,8 +105,10 @@ Some basic terminology - We’ll let `N` denote the number of dice rolls in our 
 
 Let's generate a binomial distribution in R:
 
+d= density; peak of the distribution
+
 ```{r}
-dbinom( n = 4, size = 20, prob = 1/6 )
+dbinom( x = 4, size = 20, prob = 1/6 )
 ```
 The above command calculates the probability of getting x = 4 skulls, from an experiment of size = 20 trials, in which the probability of getting a skull on any one trial is prob = 1/6.
 
@@ -135,11 +139,22 @@ qbinom( p = 0.75, size = 20, prob = 1/6 )
 
 We've found different quantities. What if we want to simulate the above experiments. We specify how many times R should “simulate” the experiment using the n argument, and it will generate random outcomes from the binomial distribution using the `rbinom` function.
 
+N = No. of experiment (how many types of exp)
+size = size of experiment (how many times in an exp)
+
+* how many rolls in an exp = 20. how many exp = 10k
+
 ```{r}
-z <- rbinom( n = 100, size = 20, prob = 1/6 )
-z
+z <- rbinom( n = 10000, size = 20, prob = 1/6 )
+y <- rbinom( n = 10, size = 20, prob = 1/6 )
+x <- rbinom( n = 5, size = 20, prob = 1/6 )
+a <- rbinom( n = 20000, size = 20, prob = 1/6 )
+# z
 #Let's also plot this and see how it looks
-hist(z, col = 'steelblue')
+hist(z, breaks =25, col = 'steelblue')
+hist(y, breaks =25, col = 'steelblue')
+hist(x, breaks =25, col = 'steelblue')
+hist(a, breaks =25, col = 'steelblue')
 ```
 #Try plotting the distributions in above examples and vary the size, trial number and probability to generate different plots.
 

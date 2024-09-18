@@ -54,8 +54,9 @@ Let's also examine the score of 35 out of 50 for grumpiness. Would this mean tha
 ```{r}
 #Try it out yourself
 #Define a vector with Grumpiness scores of you and your friends and find the z score for your self
-X =                        
-z = (X - mean(X)) / sd(X)
+X = c(30, 70, 65, 20, 45, 80)                   
+z = round((X - mean(X)) / sd(X),2)
+z
 ```
 
 _Reference: Chapter 5, Winter B._
@@ -65,15 +66,16 @@ _Reference: Chapter 5, Winter B._
 So far we have focused entirely on how to construct descriptive statistics for a single variable. We haven’t talked about how to describe the relationships between variables in the data. To do that, we want to talk mostly about the correlation between variables.
 
 ```{r}
-setwd("/Users/lenovo1/Desktop/mtech/courses/stats/Datasets/data/")
+#setwd("/Users/lenovo1/Desktop/mtech/courses/stats/Datasets/data/")
 
 #Let's load some data
 load( "parenthood.Rdata" )
-who(TRUE)
+#who(TRUE)
 ```
 
 ```{r}
 #Try describe() for the above dataframe
+describe(parenthood)
 ```
 
 
@@ -82,6 +84,9 @@ who(TRUE)
 hist(parenthood$dan.sleep)
 
 #Try plotting for the other 2 variables
+hist(parenthood$dan.grump)
+
+hist(parenthood$baby.sleep)
 
 ```
 
@@ -89,7 +94,7 @@ But we now want to take a look at the relationship between two variables. n orde
 
 _Brief note on Scatterplots:_
 
-In this kind of plot, each observation corresponds to one dot: the horizontal location of the dot plots the value of the observation on one variable, and the vertical location displays its value on the other variable. In many situations you don’t really have a clear opinion about what the causal relationship is (e.g., does A cause B, or does B cause A, or does some other variable C controls both A and B). If that’s the case, it doesn’t really matter which variable you plot on the x-axis and which one you plot on the y-axis. However, in many situations you do have a pretty strong idea which variable you think is most likely to be causal, or at least you have some suspicions in that direction. If so, then it’s conventional to plot the **cause** variable on the **x-axis**, and the **effect** variable on the **y-axis**. 
+In this kind of plot, each observation corresponds to one dot: *the horizontal location of the dot plots the value of the observation on one variable, and the vertical location displays its value on the other variable*. In many situations you don’t really have a clear opinion about what the causal relationship is (e.g., does A cause B, or does B cause A, or does some other variable C controls both A and B). If that’s the case, it doesn’t really matter which variable you plot on the x-axis and which one you plot on the y-axis. However, in many situations you do have a pretty strong idea which variable you think is most likely to be causal, or at least you have some suspicions in that direction. If so, then it’s conventional to plot the **cause** variable on the **x-axis**, and the **effect** variable on the **y-axis**. 
 
 Suppose our goal is to draw a scatterplot displaying the relationship between the amount of sleep that Dan gets (dan.sleep) and how grumpy she is the next day (dan.grump). _Do you suspect a causal relationship here?_
 
@@ -98,19 +103,26 @@ A simple way to plot these scatter plots is to use the scatterplot() function in
 Let's load the package and get started.
 
 ```{r}
-install.packages("car")
-install.packages("Rcpp")
+# install.packages("car")
+# install.packages("Rcpp")
 ```
 
 
 ```{r}
 library(car)
+# (y~x)
 scatterplot( dan.grump ~ dan.sleep, data = parenthood, regLine = FALSE, smooth = FALSE)
 scatterplot
 ```
 
 ```{r}
 #Plot a scatter plot for baby.sleep and dan.grump variables
+
+scatterplot(dan.grump ~ baby.sleep, data = parenthood)
+
+scatterplot(dan.grump ~ baby.sleep, data = parenthood, regLine = FALSE)
+
+scatterplot(dan.grump ~ baby.sleep, data = parenthood, regLine = FALSE, smooth = FALSE)
 ```
 
 
@@ -120,9 +132,13 @@ But what about the plot between baby.sleep and dan.sleep?
 
 ```{r}
 #Plot baby sleep and dan sleep here
+
+scatterplot(dan.sleep ~ baby.sleep, data = parenthood, regLine = FALSE, smooth = FALSE)
 ```
 
 Is the direction of this plot same as the earlier plots? What about strength?
+
+Nope
 
 ##### Correlation coefficient
 
@@ -162,6 +178,8 @@ Now let's check out how to code this using cor().
 cor(x = parenthood$dan.sleep, y = parenthood$dan.grump)
 
 #Try giving the entire dataframe 'parenthood' as input in cor()
+
+cor(parenthood)
 ```
 
 What did you find?
@@ -187,7 +205,10 @@ Were the correlation coefficients same?
 Now try plotting them.
 
 ```{r}
-scatterplot()
+scatterplot(Y1 ~ X1)
+scatterplot(Y2 ~ X2)
+scatterplot(Y3 ~ X3)
+# scatterplot(Y4 ~ X4)
 ```
 
 Therefore, remember to always look at the scatterplot before attaching any interpretation to the data!
@@ -199,7 +220,7 @@ If we have to properly define the role of Pearson's coefficient, we can say that
 But let's take a look at another dataset and find correlation between its variables.
 
 ```{r}
-setwd("/Users/lenovo1/Desktop/mtech/courses/stats/Datasets/data/")
+# setwd("/Users/lenovo1/Desktop/mtech/courses/stats/Datasets/data/")
 load( "effort.Rdata" )
 effort
 cor( effort$hours, effort$grade )
@@ -241,6 +262,8 @@ Let's look at such a dataset.
 ```{r}
 load( "parenthood2.Rdata" )
 print( parenthood2 )
+
+library(psych)
 describe( parenthood2 ) 
 #Check how many missing values are there for each variable - compare the values in 'n' with the number of days.
 ```
@@ -267,6 +290,11 @@ The above operation can also be performed by another function called `correlate(
 Try it out.
 ```{r}
 #Try correlate() for parenthood2 here
+
+library(lsr)
+cor(parenthood2, use = "pairwise.complete.obs")
+
+correlate(parenthood2)
 ```
 
 _Reference : Chapter 5, D. Navarro_
