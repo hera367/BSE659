@@ -16,10 +16,13 @@ Linear transformations are useful, because they allow you to represent your data
 
 **Centering:**
 
+Xc = (Xi - X)
 ‘Centering’ is a particularly common linear transformation. This linear transfor- mation is frequently applied to continuous predictor variables. 
 To center a predictor variable, subtract the mean of that predictor variable from each data point. As a result, each data point is expressed in terms of how much it is above the mean (positive score) or below the mean (negative score). Thus, subtracting the mean out of the variable expresses each data point as a mean-deviation score. The value zero now has a new meaning for this variable: it is at the ‘center’ of the variable’s distribution, namely, the mean.
 
 **Standardizing:**
+
+(Xc/sd)
 
 A second common linear transformation is ‘standardizing’ or ‘z–scoring’. For standardizing, the centered variable is divided by the standard deviation of the sample.
 
@@ -114,7 +117,7 @@ library(car)
 scatterplot( dan.grump ~ dan.sleep, data = parenthood, regLine = FALSE, smooth = FALSE)
 scatterplot
 ```
-
+(y~x)
 ```{r}
 #Plot a scatter plot for baby.sleep and dan.grump variables
 

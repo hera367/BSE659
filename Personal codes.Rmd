@@ -1,0 +1,360 @@
+---
+title: "Personal codes"
+author: "Mine"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+FIrST
+
+check , nrow(), ncol(), summary(), mean, median , sd, mode
+
+plot a histogram to check the distribution
+
+relationship k liye scatterplot()
+
+then begin anything
+
+
+
+
+
+
+
+```{r}
+Filter_data <- filter(data, risk_of_bias=="moderate" & outcome_measure== "Pain intensity")
+Filter_data
+```
+
+```{r}
+filter(Filter_data, placebo_manipulation=='conditioning')
+```
+
+```{r}
+## this drops the NA values from all rows
+covid_data <- na.omit(covid_data)
+```
+
+```{r}
+proportion <- 81/124
+proportion
+```
+
+```{r}
+boxplot(formula= effectsize_corr_r~placebo_type, data = data)
+```
+
+
+
+For correlations
+```{r}
+library(car)
+scatterplot(study_quality~effectsize_corr_r, data = data)
+```
+```{r}
+cor(x=data$study_quality, y=data$effectsize_corr_r, use ="complete.obs")
+```
+
+
+
+
+Binomial Distribution --> discrete distribution
+to specify the size and prob arguments:
+```{r}
+dbinom( x = 4, size = 20, prob = 1/6 )
+```
+```{r}
+pbinom( q= 4, size = 20, prob = 1/6)
+```
+```{r}
+qbinom( p = 0.75, size = 20, prob = 1/6 )
+```
+```{r}
+rbinom( n = 100, size = 20, prob = 1/6 )
+```
+
+(normal, t, and F) are all continuous distributions,
+and so R can always return an exact quantile whenever you ask for it.
+
+Normal Distribution --> argument names for the parameters are mean and sd.
+```{r}
+dnorm( x = 1, mean = 1, sd = 0.1 )
+
+```
+
+\tails" of the t distribution are \heavier" (i.e., extend further outwards) than the tails of the normal distribution.
+
+t Distribution
+
+Similar to ND with with heavier tails. 
+t distribution is related to the normal distribution when the standard deviation is unknown.
+```{r}
+dt(), pt(), qt() and rt()
+```
+
+Chi-square Distribution
+```{r}
+dchisq(),pchisq(), qchisq(), rchisq()
+```
+
+F Distribution
+look a bit like a chi-distribution, and it arises whenever you need to compare two chi-distributions to one another
+```{r}
+df(), pf(), qf() and rf()
+```
+
+
+example
+```{r}
+normal.a <- rnorm(n =1000, mean = 0, sd =1)
+print(head(normal.a))
+hist(normal.a)
+```
+
+```{r}
+normal.b <- rnorm(1000)
+normal.c <- rnorm(1000)
+```
+
+```{r}
+chi.sq.3 <- (normal.a)^2 + (normal.b)^2 + (normal.c)^2
+head(chi.sq.3)
+hist(chi.sq.3)
+```
+
+```{r}
+chi.sq.3 <-  rchisq(1000,3)
+scaled.chi.sq.3 <- chi.sq.3 / 3
+
+chi.sq.20 <- rchisq(1000,20)
+scaled.chi.sq.20 <- chi.sq.20 /20
+
+F.3.20 <- scaled.chi.sq.3 / scaled.chi.sq.20
+
+hist(F.3.20)
+```
+
+
+
+CHAPTER 10 - ESTIMATION
+
+more explicit about what it is that we're drawing
+inferences from (the sample) and what it is that we're drawing inferences about (the population).
+
+sample, I get a number that is fairly
+close to the population mean 100 but not identical.
+
+In general, sample statistics are the things you can calculate from your data set, and the
+population parameters are the things you want to learn about
+
+```{r}
+IQ <-  rnorm(n=1000, mean = 100, sd = 15)
+IQ <- round(IQ)
+print(head(IQ))
+mean(IQ)
+sd(IQ)
+hist(IQ)
+```
+
+LAW OF LARGE NUMBERS
+
+When applied to the sample mean, what the law of large numbers states is that as the sample gets larger, the sample mean tends to get closer to the true population mean.
+
+i.e; if 'n' increases, then sample mean becomes closer to population mean.
+
+
+Or, to say it a little bit more precisely, as the sample size \approaches" innity (written as N Ñ 8) the sample mean approaches the population mean ( X
+Ñ )
+
+for n=5 samples
+```{r}
+IQ.1 <- round( rnorm(n=5, mean=100, sd=15 ))
+IQ.1
+mean(IQ)
+sd(IQ)
+
+## Inference: sample mean and sd is close to population mean ans sd
+
+## if u increase N, it will get more closer.
+```
+
+for conducting more such similar experiments (i)
+```{r}
+IQ.2 <- round( rnorm(n=5, mean=100, sd=15 ))
+IQ.2
+mean(IQ.2)
+sd(IQ.2)
+
+## this time it's mean = more and sd = less
+```
+If I repeat the experiment 10 times I obtain the
+results shown in Table 10.1, and as you can see the sample mean varies from one replication to the next.
+
+
+
+What if I continued like this for 10,000 replications, and then drew a histogram? Using the magical powers
+of R that's exactly what I did, and you can see the results in Figure 10.5. As this picture illustrates, the
+average of 5 IQ scores is usually between 90 and 110. But more importantly, what it highlights is that if
+we replicate an experiment over and over again, what we end up with is a distribution of sample means!
+This distribution has a special name in statistics: it's called the sampling distribution of the mean.    
+
+a few observations, the sample mean is likely to be quite inaccurate.
+if
+you replicate a small experiment and recalculate the mean you'll get a very dierent answer.
+
+
+If you replicate a large experiment and recalculate the
+sample mean you'll probably get the same answer you got last time, so the sampling distribution will
+be very narrow.
+
+**BIGGER THE SAMPLE SIZE, NARROW THE SAMPLING DISTRIBUTION GETS**
+--> We can quantify this eect by calculating the standard deviation of the
+sampling distribution, which is referred to as the *STANDARD ERRORS*
+
+standard error of the sample mean, we often
+use the acronym SEM.
+
+*N increases == SEM decreases*
+
+your population distribution is, as N increases the sampling distribution of the
+mean starts to look more like a normal distribution.
+
+other words, as long as your sample size (N) isn't tiny, the sampling distribution of the
+mean will be approximately normal, no matter what your population distribution looks like!
+
+
+*Assumptions for sampling distribution of the mean:*
+ **The mean of the sampling distribution is the same as the mean of the population.
+ The standard deviation of the sampling distribution (i.e., the standard error) gets smaller as the sample size increases.
+ The shape of the sampling distribution becomes normal as the sample size increases.**
+
+**calculate the sample mean, and I use that as my estimate of the population mean.**
+
+If, N =1 then for estimation of population sd we can say that no idea at all coz the sample size it too small. no variability in the sample can be seen. so the sd would be same as the population sd.
+
+*that the sample standard deviation is likely to be smaller than the population standard deviation.*
+
+sample mean is an unbiased estimator of the population
+mean (panel a), but the sample standard deviation is a biased estimator of the population standard
+deviation (panel b).
+
+if we want to make a \best guess"
+ about the value of the population standard deviation , we should make sure our guess is a little bit
+larger than the sample standard deviation s.
+
+
+One nal point: in practice, a lot of people tend to refer to ^ (i.e., the formula where we divide by
+N
+1) as the sample standard deviation. Technically, this is incorrect: the sample standard deviation
+
+should be equal to s (i.e., the formula where we divide by N).
+
+
+
+CONFIDENCE INTERVAL
+
+To be more precise, we can use the qnorm() function to compute the 2.5th and 97.5th percentiles of the normal distribution
+
+```{r}
+qnorm(p = c(.025, .975) )
+```
+The more correct answer is that 95% chance that a normally-distributed quantity will fall within 1.96 standard deviations of the true mean.
+
+**When N is very large, we get pretty much the same
+value using qt() that we would if we used qnorm()...
+> N <- 10000 # suppose our sample size is 10,000
+> qt( p = .975, df = N-1) # calculate the 97.5th quantile of the t-dist
+[1] 1.960201
+
+But when N is small, we get a much bigger number when we use the t distribution:
+> N <- 10 # suppose our sample size is 10
+> qt( p = .975, df = N-1) # calculate the 97.5th quantile of the t-dist
+[1] 2.262157**
+
+
+
+
+
+PRETTY GRAPHS
+
+```{r}
+# Generate the data
+iq_scores <- rnorm(n = 100, mean = 10, sd = 1)
+
+# Create the histogram
+hist(iq_scores, 
+     breaks = 12, 
+     col = "mediumpurple", 
+     main = NULL, # Remove title 
+     xlab = "IQ Score")
+
+# Add the density curve
+lines(density(iq_scores), lwd = 2) 
+```
+
+```{r}
+library(ggplot2)
+
+# Sample IQ data (replace with your actual data)
+set.seed(123)  # For reproducibility
+iq_data <- data.frame(IQ = rnorm(100, mean = 100, sd = 10))
+
+# Create the histogram with density curve
+ggplot(iq_data, aes(x = IQ)) +
+  geom_histogram(aes(y = ..density..), binwidth = 5, fill = "mediumpurple", color = "white") +
+  stat_function(fun = dnorm, args = list(mean = mean(iq_data$IQ), sd = sd(iq_data$IQ)), 
+                size = 1, color = "black") +
+  theme_classic() +  # Use a clean theme
+  labs(x = "IQ Score", y = "")  # Label x-axis, remove y-axis label
+```
+
+
+```{r}
+# Set seed for reproducibility
+set.seed(123)
+
+# Generate a large population
+population <- rnorm(100, mean = 15, sd = 15)
+
+# Set sample size
+sample_size <- 50
+
+# Number of samples to draw
+num_samples <- 10000
+
+# Function to calculate sample standard deviation
+sample_sd <- function(x) sd(sample(x, sample_size))
+
+# Generate a distribution of sample standard deviations
+sd_samples <- replicate(num_samples, sample_sd(population))
+
+# Create the histogram
+hist(sd_samples, 
+     breaks = 30, 
+     col = "mediumslateblue", 
+     border = "white",
+     main = " ",
+     xlab = "Sample Standard Deviation",
+     yaxt = "n") 
+
+# Add a vertical line for the population standard deviation
+abline(v = sd(population), lwd = 2, lty = 2)
+
+# Add text annotation for the population standard deviation
+text(x = sd(population), y = 1200, "Population Standard Deviation", pos = 2)
+```
+
+
+
+
+
+
+
+
+
+
+

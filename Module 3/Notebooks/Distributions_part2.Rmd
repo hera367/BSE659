@@ -94,8 +94,8 @@ Checking Normality of a distribution
 ```{r}
 CompanyABCProfit<-read.csv("CompanyABCProfit.csv")
 attach(CompanyABCProfit)
-install.packages("dplyr")
-install.packages("ggpubr")
+#install.packages("dplyr")
+#install.packages("ggpubr")
 library("ggpubr")
 ggdensity(Profit,main="Profit per year", xlab="YEARLY PROFIT IN INR" )
 ggqqplot(Profit)

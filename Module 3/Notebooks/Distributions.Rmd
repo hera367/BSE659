@@ -83,6 +83,8 @@ Probability distribution is simply the probabilities of these different events a
 
 ```{r}
 #Try plotting a bar graph of all the probabilities above
+library(ggplot2)
+hist(pants$probability)
 
 
 ```

@@ -12,7 +12,7 @@ Before starting with Estimation, we need to understand the sampling theory, a pa
 It is necessary to understand what we're drawing inferences from (*sample*) and what we're drawing inferences about (*population*).
 As we've previously discussed, **Population** refers to the set of all possible people, or all possible observations, that you want to draw conclusions about, and is generally much bigger than the sample.
 
-If I am a cognitive scientist who wants to stude=y about the brain, what should I count as my population of interest:
+If I am a cognitive scientist who wants to study about the brain, what should I count as my population of interest:
 - All undergraduate students in Psychology at IITK?
 - All students at IITK?
 - Any human in the world?
@@ -301,6 +301,7 @@ What would you to find out the range for 70% confidence interval? What percentil
 
 ```{r}
 #Try finding out the magic number (Eg. 1.96 for 95%) for 70% CI
+qnorm(p = c(0.15, 0.85))
 ```
 
 But but but...
@@ -339,6 +340,7 @@ ciMean( x = afl$attendance, conf = 0.95 ) #Calculating confidence interval using
 
 ```{r}
 #Try finding the 80% confidence interval for the variable afl$home.score.
+ciMean( x = afl$attendance, conf = 0.80 )
 ```
 
 ##### Plotting Confidence intervals
@@ -348,7 +350,7 @@ For eg. if we want to plot the cofidence interval of afl$attendance
 
 ```{r}
 #install.packages('sciplot')
-install.packages('gplots')
+#install.packages('gplots')
 ```
 
 ```{r}

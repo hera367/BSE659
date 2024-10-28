@@ -225,7 +225,7 @@ But what does this variance signify? It is very difficult to interpret the squar
 
 Try to find out the standard deviation of afl.margins.
 
-sd and var need N-1...> find out why?...
+var need N-1...> find out why?...
 smaller the sample more diviations can be seen.
 
 ```{r}
@@ -273,7 +273,7 @@ summary(afl.margins)
 ```
 To check kurtos and skewness
 
-- describe() and skew() works with psyc package.
+- describe() and skew() works with psych package.
 
 vars --> no of variable
 n --> no of observations
